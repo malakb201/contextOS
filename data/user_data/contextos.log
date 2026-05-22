@@ -9,3 +9,25 @@
 00:39:09  INFO      core.app_watcher      AppWatcher started.
 00:39:09  INFO      core.context_engine   ContextEngine started.
 00:39:09  INFO      core.session_manager  Session 1 started.
+00:55:30  INFO      root                  ==================================================
+00:55:30  INFO      root                  ContextOS starting up...
+00:55:30  INFO      root                  ==================================================
+00:55:30  INFO      root                  System specs: RAM=5.7GB, CPU cores=8, OS=Windows-11-10.0.26200-SP0
+00:55:30  INFO      root                  Mode from config: auto
+00:55:30  INFO      data.database         Database ready at C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\context.db
+00:55:30  INFO      root                  Database ready.
+00:55:30  INFO      root                  Launching system tray UI...
+00:55:30  INFO      core.app_watcher      AppWatcher started.
+00:55:30  INFO      core.context_engine   ContextEngine started.
+00:55:30  INFO      core.session_manager  Session 2 started.
+00:57:26  INFO      root                  ==================================================
+00:57:26  INFO      root                  ContextOS starting up...
+00:57:26  INFO      root                  ==================================================
+00:57:26  INFO      root                  System specs: RAM=5.7GB, CPU cores=8, OS=Windows-11-10.0.26200-SP0
+00:57:26  INFO      root                  Mode from config: auto
+00:57:26  INFO      data.database         Database ready at C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\context.db
+00:57:26  INFO      root                  Database ready.
+00:57:26  INFO      root                  Launching system tray UI...
+00:57:26  INFO      core.app_watcher      AppWatcher started.
+00:57:26  INFO      core.context_engine   ContextEngine started.
+00:57:26  INFO      core.session_manager  Session 3 started.
