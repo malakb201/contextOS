@@ -1,0 +1,24 @@
+# ContextOS — Python dependencies
+# Install everything with:   pip install -r requirements.txt
+#
+# CORE (required — works on all platforms)
+# ─────────────────────────────────────────
+# No extra packages needed for the core engine!
+# Python's built-in sqlite3, threading, logging, json are all used.
+
+# WINDOWS GUI (install on Windows only)
+# ──────────────────────────────────────
+pystray==0.19.5          # system tray icon
+Pillow==10.4.0           # draw the tray icon image
+pywin32==306             # read active window titles (Windows only)
+psutil==6.0.0            # CPU/RAM monitoring, process names
+
+# AI (optional — only needed for full AI mode)
+# ─────────────────────────────────────────────
+# llama-cpp-python==0.2.90  # local AI model runner
+#   → uncomment when you are ready to add AI features (Stage 5 in your guide)
+#   → install command:  pip install llama-cpp-python
+
+# DEVELOPMENT TOOLS (install on all platforms for testing)
+# ─────────────────────────────────────────────────────────
+pytest==8.3.3            # run tests with:  pytest tests/
