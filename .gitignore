@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# User data — never commit personal data
+data/user_data/
+!data/user_data/.gitkeep
+
+# PyInstaller
+*.spec
+dist/
+build/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Logs
+*.log
+
+# Environment
+.env
+.venv
+venv/
+ENV/
+
+# OS
+.DS_Store

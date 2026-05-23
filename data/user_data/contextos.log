@@ -101,3 +101,87 @@
 14:22:27  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"payment" — detected in VS Code and Notepad')
 14:22:54  INFO      core.context_engine   Dispatching insight: Insight('answer': 'Your browser research on "payment" matches your current code')
 14:22:54  INFO      core.context_engine   Dispatching insight: Insight('conflict': 'GitHub and local editor both show "payment"')
+14:28:51  INFO      root                  ====================================================
+14:28:51  INFO      root                    ContextOS starting up
+14:28:51  INFO      root                  ====================================================
+14:28:51  INFO      data.config_manager   Settings loaded from C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\settings.json
+14:28:51  INFO      root                  System: RAM=5.7GB  CPU=8 cores  OS=Windows-11-10.0.26200-SP0
+14:28:51  INFO      root                  Mode: full
+14:28:51  INFO      data.database         Database ready at C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\context.db
+14:28:51  INFO      root                  Database ready.
+14:28:51  INFO      root                  Launching ContextOS...
+14:28:51  INFO      core.app_watcher      AppWatcher started — mode: REAL (win32gui)
+14:28:51  INFO      core.context_engine   ContextEngine started.
+14:28:51  INFO      core.session_manager  SessionManager started. Session ID: 8
+14:28:54  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"payment" — detected in Chrome and VS Code')
+14:29:13  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"payment" — detected in Chrome and Notepad')
+14:29:22  INFO      core.context_engine   Dispatching insight: Insight('answer': 'Your browser research on "payment" matches your current code')
+14:29:22  INFO      core.context_engine   Dispatching insight: Insight('conflict': 'GitHub and local editor both show "payment"')
+14:29:53  INFO      core.context_engine   Dispatching insight: Insight('answer': 'Message about "payment" — relevant to your current work')
+14:30:49  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"malakb201" — detected in Edge and Chrome')
+14:30:55  INFO      core.context_engine   Dispatching insight: Insight('answer': 'Your browser research on "malakb201" matches your current code')
+14:30:55  INFO      core.context_engine   Dispatching insight: Insight('conflict': 'GitHub and local editor both show "malakb201"')
+14:33:51  INFO      core.session_manager  User went away — session snapshot taken.
+14:37:20  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"malakb201" — detected in Chrome and Edge')
+14:37:25  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"payment" — detected in VS Code and Chrome')
+14:40:13  INFO      core.context_engine   Dispatching insight: Insight('answer': 'Message about "payment" — relevant to your current work')
+14:41:15  INFO      core.context_engine   Dispatching insight: Insight('answer': 'Your browser research on "malakb201" matches your current code')
+14:41:15  INFO      core.context_engine   Dispatching insight: Insight('conflict': 'GitHub and local editor both show "malakb201"')
+14:48:44  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"malakb201" — detected in Edge and Chrome')
+14:49:28  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"malakb201" — detected in Chrome and Edge')
+14:50:34  INFO      core.context_engine   Dispatching insight: Insight('answer': 'Message about "payment" — relevant to your current work')
+14:51:36  INFO      core.context_engine   Dispatching insight: Insight('answer': 'Your browser research on "malakb201" matches your current code')
+14:51:36  INFO      core.context_engine   Dispatching insight: Insight('conflict': 'GitHub and local editor both show "malakb201"')
+14:58:51  INFO      core.app_watcher      AppWatcher stopped. Events: 124
+14:58:59  INFO      core.context_engine   ContextEngine stopped.
+17:44:53  INFO      root                  ====================================================
+17:44:53  INFO      root                    ContextOS starting up
+17:44:53  INFO      root                  ====================================================
+17:44:53  INFO      data.config_manager   Settings loaded from C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\settings.json
+17:44:53  INFO      root                  System: RAM=5.7GB  CPU=8 cores  OS=Windows-11-10.0.26200-SP0
+17:44:53  INFO      root                  Mode: full
+17:44:53  INFO      data.database         Database ready at C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\context.db
+17:44:53  INFO      root                  Database ready.
+17:44:53  INFO      root                  Launching ContextOS...
+17:44:53  INFO      core.app_watcher      AppWatcher started — mode: REAL (win32gui)
+17:44:53  INFO      core.context_engine   ContextEngine started.
+17:44:53  INFO      core.session_manager  SessionManager started. Session ID: 9
+17:49:40  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"imagetool" — detected in Edge and File Explorer')
+17:49:53  INFO      core.session_manager  User went away — session snapshot taken.
+17:51:00  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"imagetool" — detected in File Explorer and Edge')
+18:01:09  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"imagetool" — detected in File Explorer and Edge')
+18:01:26  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"files" — detected in File Explorer and Claude')
+18:02:19  INFO      ui.tray_app           User quit.
+18:02:19  INFO      core.app_watcher      AppWatcher stopped. Events: 71
+18:02:25  INFO      core.context_engine   ContextEngine stopped.
+18:02:28  ERROR     pystray._base         An error occurred when calling message handler
+Traceback (most recent call last):
+  File "C:\Users\malak\AppData\Local\Programs\Python\Python312\Lib\site-packages\pystray\_win32.py", line 412, in _dispatcher
+    return int(icon._message_handlers.get(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\malak\AppData\Local\Programs\Python\Python312\Lib\site-packages\pystray\_win32.py", line 224, in _on_notify
+    descriptors[index - 1](self)
+  File "C:\Users\malak\AppData\Local\Programs\Python\Python312\Lib\site-packages\pystray\_base.py", line 328, in inner
+    callback(self)
+  File "C:\Users\malak\AppData\Local\Programs\Python\Python312\Lib\site-packages\pystray\_base.py", line 453, in __call__
+    return self._action(icon, self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\malak\AppData\Local\Programs\Python\Python312\Lib\site-packages\pystray\_base.py", line 548, in wrapper0
+    return action()
+           ^^^^^^^^
+  File "C:\Users\malak\OneDrive\Desktop\clone\contextOS\ui\tray_app.py", line 551, in _quit
+    self.stop()
+  File "C:\Users\malak\OneDrive\Desktop\clone\contextOS\ui\tray_app.py", line 102, in stop
+    self.session.stop()
+  File "C:\Users\malak\OneDrive\Desktop\clone\contextOS\core\session_manager.py", line 91, in stop
+    self._thread.join(timeout=3)
+  File "C:\Users\malak\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1151, in join
+    self._wait_for_tstate_lock(timeout=max(timeout, 0))
+  File "C:\Users\malak\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1167, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+18:38:45  INFO      ui.tray_app           User quit.
+18:38:45  INFO      core.app_watcher      AppWatcher stopped. Events: 71
+18:38:45  INFO      core.context_engine   ContextEngine stopped.
+18:38:45  INFO      core.session_manager  SessionManager stopped.
