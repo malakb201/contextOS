@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ContextOS — AI-Powered Context Bridge for Windows</title>
+<meta name="description" content="ContextOS watches all your open apps and alerts you when something in one app conflicts with another. Free, offline, Windows 7-11.">
+<meta property="og:title" content="ContextOS — AI-Powered Context Bridge">
+<meta property="og:description" content="Stop losing hours to context switching. Let ContextOS connect your apps.">
+<meta property="og:image" content="assets/icons/logo_256.png">
+<link rel="icon" href="assets/icons/favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --teal:#0d9e62;--teal-l:#0dcfaa;--teal-d:#0a7a4c;
+  --teal-bg:#e6f7f0;--amber:#d97706;--amber-bg:#fef3c7;
+  --blue:#1d4ed8;--blue-bg:#eff6ff;
+  --purple:#7c3aed;--purple-bg:#f5f3ff;
+  --bg:#ffffff;--bg2:#f8fafc;--bg3:#f1f5f9;
+  --border:#e2e8f0;--border2:#cbd5e1;
+  --text:#0f172a;--text2:#475569;--text3:#94a3b8;
+  --sb:#1e293b;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 48px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo img{width:32px;height:32px;border-radius:6px;}
+.nav-logo span{font-size:17px;font-weight:700;color:var(--text);}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-size:14px;color:var(--text2);text-decoration:none;font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--teal);}
+.nav-cta{
+  background:var(--teal);color:#fff;
+  padding:9px 22px;border-radius:8px;
+  font-size:14px;font-weight:600;
+  text-decoration:none;transition:background .2s,transform .2s;
+}
+.nav-cta:hover{background:var(--teal-d);transform:translateY(-1px);}
+
+/* ── ANIMATIONS ── */
+[data-anim]{opacity:0;transform:translateY(40px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1);}
+[data-anim].visible{opacity:1;transform:none;}
+[data-anim][data-delay="1"]{transition-delay:.1s;}
+[data-anim][data-delay="2"]{transition-delay:.2s;}
+[data-anim][data-delay="3"]{transition-delay:.3s;}
+[data-anim][data-delay="4"]{transition-delay:.4s;}
+[data-anim][data-delay="5"]{transition-delay:.5s;}
+[data-anim][data-delay="6"]{transition-delay:.6s;}
+
+/* ── SECTIONS ── */
+section{padding:100px 48px;}
+.inner{max-width:1080px;margin:0 auto;}
+.tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:5px 14px;border-radius:20px;
+  background:var(--teal-bg);color:var(--teal-d);
+  margin-bottom:20px;
+}
+.tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);display:block;}
+h1{font-size:clamp(38px,6vw,72px);font-weight:800;line-height:1.05;letter-spacing:-.03em;color:var(--text);margin-bottom:20px;}
+h2{font-size:clamp(28px,4vw,48px);font-weight:800;line-height:1.1;letter-spacing:-.025em;color:var(--text);margin-bottom:14px;}
+.accent{color:var(--teal);}
+.sec-sub{font-size:17px;color:var(--text2);line-height:1.65;font-weight:400;max-width:560px;margin-bottom:44px;}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding-top:140px;padding-bottom:80px;
+  background:linear-gradient(160deg,#f0fdf4 0%,#fff 50%,#f8fafc 100%);
+  text-align:center;
+}
+#hero .inner{width:100%;}
+.hero-logo{
+  width:96px;height:96px;
+  border-radius:22px;
+  margin:0 auto 28px;
+  box-shadow:0 0 0 12px rgba(13,158,98,.08),0 0 0 24px rgba(13,158,98,.04);
+  animation:logo-in .8s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes logo-in{from{transform:scale(.5);opacity:0;}to{transform:scale(1);opacity:1;}}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:44px;}
+.pill{font-size:12px;padding:6px 16px;border-radius:20px;border:1.5px solid var(--border2);color:var(--text2);background:#fff;font-weight:500;}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:64px;}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--teal);color:#fff;
+  padding:15px 30px;border-radius:10px;
+  font-size:15px;font-weight:600;text-decoration:none;
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(13,158,98,.35);}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;color:var(--text);
+  padding:15px 30px;border-radius:10px;
+  font-size:15px;font-weight:500;text-decoration:none;
+  border:1.5px solid var(--border2);
+  transition:border-color .2s,transform .2s;
+}
+.btn-secondary:hover{border-color:var(--teal);transform:translateY(-2px);}
+.hero-note{font-size:13px;color:var(--text3);}
+
+/* ── MOCK WINDOW ── */
+.mock-wrap{max-width:900px;margin:0 auto;}
+.mock-win{
+  background:#fff;
+  border:1px solid var(--border2);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 32px 80px rgba(15,23,42,.12),0 0 0 1px var(--border);
+}
+.mock-bar{
+  background:var(--bg2);
+  padding:10px 16px;
+  display:flex;align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.mock-dots{display:flex;gap:6px;}
+.mock-dot{width:10px;height:10px;border-radius:50%;}
+.dr{background:#ff5f57;}.dy{background:#febc2e;}.dg{background:#28c840;}
+.mock-title{font-size:12px;color:var(--text3);position:absolute;left:50%;transform:translateX(-50%);}
+.mock-badge{font-size:10px;padding:2px 10px;border-radius:10px;background:var(--teal-bg);color:var(--teal-d);font-weight:600;}
+.mock-body{display:flex;height:320px;}
+.mock-sb{
+  width:56px;background:var(--sb);
+  display:flex;flex-direction:column;align-items:center;padding:12px 0;gap:6px;
+}
+.msb-icon{width:36px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;color:#64748b;cursor:pointer;}
+.msb-icon.active,.msb-icon:hover{background:#334155;color:#fff;}
+.mock-content{flex:1;padding:18px;overflow:hidden;}
+.mlbl{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.mstat-g{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px;}
+.mstat{border-radius:8px;padding:8px 10px;}
+.msv{font-size:20px;font-weight:800;}
+.msl{font-size:9px;color:var(--text2);}
+.mfocus{border-radius:8px;padding:10px 12px;margin-bottom:12px;border-left:3px solid var(--teal);background:var(--teal-bg);}
+.mft{font-size:12px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.mchips{display:flex;gap:4px;}
+.mchip{font-size:9px;padding:2px 8px;border-radius:8px;background:#fff;color:var(--text2);border:1px solid var(--border);}
+.mtrail{display:flex;flex-direction:column;gap:5px;}
+.mtr{display:flex;align-items:center;gap:8px;font-size:10px;}
+.mtr-dot{width:5px;height:5px;border-radius:50%;background:var(--border2);flex-shrink:0;}
+.mtr-t{font-size:8px;color:var(--text3);min-width:28px;}
+.mtr-app{color:var(--teal);font-weight:600;}
+.mtr-x{color:var(--text2);}
+
+/* ── PROBLEM ── */
+#problem{background:var(--bg2);}
+.vs-grid{display:grid;grid-template-columns:1fr auto 1fr;margin-bottom:44px;}
+.vs-col{background:#fff;border:1px solid var(--border);padding:28px;border-radius:0;}
+.vs-col.bad{border-radius:14px 0 0 14px;border-right:none;}
+.vs-col.good{border-radius:0 14px 14px 0;border-left:none;}
+.vs-mid{display:flex;align-items:center;justify-content:center;background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);font-size:12px;font-weight:700;color:var(--text3);padding:0 16px;}
+.vs-lbl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;display:inline-block;padding:3px 10px;border-radius:6px;margin-bottom:16px;}
+.bad .vs-lbl{background:#fee2e2;color:#b91c1c;}
+.good .vs-lbl{background:var(--teal-bg);color:var(--teal-d);}
+.vs-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;font-size:14px;color:var(--text2);line-height:1.5;}
+.vi{flex-shrink:0;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;margin-top:2px;}
+.bad .vi{background:#fee2e2;color:#b91c1c;}
+.good .vi{background:var(--teal-bg);color:var(--teal-d);}
+.vs-item strong{color:var(--text);font-weight:600;}
+.stats-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.stat-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:28px;text-align:center;}
+.stat-n{font-size:48px;font-weight:800;color:var(--teal);line-height:1;margin-bottom:8px;}
+.stat-l{font-size:14px;color:var(--text2);}
+
+/* ── FEATURES ── */
+#features{background:#fff;}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.feat-card{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:16px;padding:32px;
+  position:relative;overflow:hidden;
+  transition:transform .3s,box-shadow .3s,border-color .3s;
+}
+.feat-card:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(15,23,42,.1);border-color:var(--border2);}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;}
+.f1::before{background:var(--amber);}
+.f2::before{background:var(--blue);}
+.f3::before{background:var(--teal);}
+.f4::before{background:var(--purple);}
+.feat-num{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;}
+.feat-icon{font-size:28px;margin-bottom:14px;}
+.feat-title{font-size:19px;font-weight:700;color:var(--text);margin-bottom:10px;}
+.feat-desc{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:18px;}
+.feat-eg{font-size:13px;padding:12px 14px;border-radius:8px;border-left:3px solid;line-height:1.5;font-style:italic;}
+.f1 .feat-eg{background:var(--amber-bg);border-color:var(--amber);color:#92400e;}
+.f2 .feat-eg{background:var(--blue-bg);border-color:var(--blue);color:#1e40af;}
+.f3 .feat-eg{background:var(--teal-bg);border-color:var(--teal);color:var(--teal-d);}
+.f4 .feat-eg{background:var(--purple-bg);border-color:var(--purple);color:#5b21b6;}
+
+/* ── SPECS ── */
+#specs{background:var(--bg2);}
+.specs-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:36px;}
+.spec-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:28px;transition:border-color .3s;}
+.spec-card.rec{border-color:var(--teal);box-shadow:0 0 0 2px rgba(13,158,98,.12);}
+.sbadge{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:10px;display:inline-block;margin-bottom:12px;}
+.smin{background:var(--amber-bg);color:#92400e;}
+.srec{background:var(--teal-bg);color:var(--teal-d);}
+.sfull{background:var(--purple-bg);color:#5b21b6;}
+.sname{font-size:17px;font-weight:700;color:var(--text);margin-bottom:16px;}
+.srow{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.sri{font-size:13px;color:var(--text3);}
+.srl{font-size:11px;color:var(--text3);min-width:56px;}
+.srv{font-size:13px;color:var(--text);font-weight:600;}
+.cpu-rows{margin-bottom:28px;}
+.cpu-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.cpu-lbl{font-size:13px;color:var(--text2);min-width:150px;}
+.cpu-bg{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.cpu-fill{height:100%;border-radius:3px;width:0;transition:width 1.4s cubic-bezier(.16,1,.3,1);}
+.cpu-val{font-size:13px;font-weight:600;color:var(--text);min-width:44px;text-align:right;}
+.bnote{background:#fff;border:1px solid rgba(13,158,98,.3);border-radius:12px;padding:18px 22px;display:flex;align-items:center;gap:14px;font-size:14px;color:var(--text2);}
+.bn-i{font-size:22px;flex-shrink:0;}
+
+/* ── STEPS ── */
+#steps{background:#fff;}
+.steps-g{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:44px;}
+.step-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;}
+.step-n{font-size:32px;font-weight:800;color:var(--teal);margin-bottom:10px;}
+.step-t{font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.step-s{font-size:13px;color:var(--text2);line-height:1.5;}
+.step-code{font-size:13px;background:var(--sb);color:#7dd3fc;padding:8px 14px;border-radius:8px;margin-top:8px;font-family:monospace;}
+
+/* ── CTA ── */
+#cta{
+  background:linear-gradient(135deg,#0a1628 0%,#1e293b 50%,#0a1628 100%);
+  text-align:center;
+}
+#cta h2{color:#fff;}
+#cta .sec-sub{color:#94a3b8;margin:0 auto 40px;}
+.cta-badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:32px;}
+.cbadge{font-size:12px;padding:5px 14px;border-radius:20px;border:1px solid #334155;color:#94a3b8;}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;}
+.made{font-size:13px;color:#475569;}
+.made span{color:var(--teal-l);}
+
+/* ── FOOTER ── */
+footer{background:var(--sb);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.foot-logo{display:flex;align-items:center;gap:10px;}
+.foot-logo img{width:28px;height:28px;border-radius:6px;}
+.foot-logo span{font-size:15px;font-weight:700;color:#fff;}
+.foot-links{display:flex;gap:24px;}
+.foot-links a{font-size:13px;color:#64748b;text-decoration:none;transition:color .2s;}
+.foot-links a:hover{color:var(--teal-l);}
+.foot-copy{font-size:12px;color:#475569;}
+
+/* ── POPUP FLOAT ── */
+#popup{
+  position:fixed;bottom:80px;right:28px;width:320px;
+  background:#fff;border:1px solid var(--border2);
+  border-radius:14px;overflow:hidden;z-index:90;
+  box-shadow:0 20px 60px rgba(15,23,42,.15);
+  transform:translateX(380px);
+  transition:transform .55s cubic-bezier(.16,1,.3,1);
+}
+#popup.show{transform:translateX(0);}
+.pop-hdr{padding:10px 14px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.pop-logo{font-size:12px;font-weight:600;color:var(--teal);display:flex;align-items:center;gap:6px;}
+.pop-dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+.pop-badge{font-size:9px;padding:2px 8px;border-radius:8px;background:var(--amber-bg);color:var(--amber);font-weight:600;}
+.pop-body{padding:14px;}
+.pop-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.4;}
+.pop-detail{font-size:11px;color:var(--text2);margin-bottom:12px;line-height:1.5;}
+.pop-btns{display:flex;gap:6px;}
+.pop-btn{font-size:10px;padding:5px 12px;border-radius:7px;cursor:pointer;border:none;font-family:inherit;font-weight:500;}
+.pop-dim{background:var(--bg3);color:var(--text2);}
+.pop-pri{background:var(--teal);color:#fff;}
+
+/* ── PROGRESS ── */
+#prog{position:fixed;top:0;left:0;height:2px;background:var(--teal);z-index:999;width:0%;transition:width .1s linear;box-shadow:0 0 8px rgba(13,158,98,.5);}
+
+@media(max-width:768px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  section{padding:80px 20px;}
+  h1{font-size:36px;}
+  h2{font-size:26px;}
+  .vs-grid{grid-template-columns:1fr;}
+  .vs-col.bad,.vs-col.good{border-radius:12px;border:1px solid var(--border);}
+  .vs-mid{display:none;}
+  .feat-grid,.specs-g,.steps-g{grid-template-columns:1fr;}
+  .stats-3{grid-template-columns:1fr 1fr;}
+  .mstat-g{grid-template-columns:1fr 1fr;}
+  footer{flex-direction:column;text-align:center;}
+  #popup{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- FLOATING POPUP -->
+<div id="popup">
+  <div class="pop-hdr">
+    <div class="pop-logo"><div class="pop-dot"></div>ContextOS</div>
+    <span class="pop-badge">⚠ Conflict</span>
+  </div>
+  <div class="pop-body">
+    <div class="pop-title">Sara's email says auth must not change — you are editing AuthService.py right now</div>
+    <div class="pop-detail">Email received 18 min ago · VS Code active · Keyword: "auth"</div>
+    <div class="pop-btns">
+      <button class="pop-btn pop-dim" onclick="document.getElementById('popup').classList.remove('show')">Dismiss</button>
+      <button class="pop-btn pop-pri">Open email</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <img src="assets/icons/logo_32.png" alt="ContextOS Logo" onerror="this.style.display='none'">
+    <span>ContextOS</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#specs">Requirements</a></li>
+    <li><a href="#steps">Install</a></li>
+  </ul>
+  <a href="https://github.com/malakb201/contextOS" class="nav-cta" target="_blank">⬇ Download Free</a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero">
+  <div class="inner">
+    <img src="assets/icons/logo_256.png" alt="ContextOS" class="hero-logo" onerror="this.style.background='#0d9e62';this.style.borderRadius='22px'">
+
+    <div class="tag" data-anim>Introducing ContextOS v1.0</div>
+
+    <h1 data-anim data-delay="1">
+      Your apps finally<br><span class="accent">talk to each other</span>
+    </h1>
+
+    <p style="font-size:18px;color:var(--text2);max-width:540px;margin:0 auto 32px;line-height:1.65;" data-anim data-delay="2">
+      ContextOS runs silently on Windows and alerts you the moment something in one app conflicts with — or answers — something in another.
+    </p>
+
+    <div class="hero-pills" data-anim data-delay="3">
+      <span class="pill">VS Code</span><span class="pill">Gmail</span>
+      <span class="pill">Slack</span><span class="pill">Notion</span>
+      <span class="pill">Figma</span><span class="pill">Chrome</span>
+      <span class="pill">Jira</span><span class="pill">Teams</span>
+      <span class="pill">WhatsApp</span><span class="pill">Any app</span>
+    </div>
+
+    <div class="hero-btns" data-anim data-delay="4">
+      <a href="https://github.com/malakb201/contextOS" class="btn-primary" target="_blank">
+        ⬇ Download Free — GitHub
+      </a>
+      <a href="#features" class="btn-secondary">See how it works →</a>
+    </div>
+
+    <p class="hero-note" data-anim data-delay="5">Free · Open source · 100% offline · Windows 7–11 · Python 3.12</p>
+
+    <!-- Mock window -->
+    <div style="margin-top:64px;" data-anim data-delay="4">
+      <div class="mock-wrap">
+        <div class="mock-win">
+          <div class="mock-bar" style="position:relative;">
+            <div class="mock-dots"><div class="mock-dot dr"></div><div class="mock-dot dy"></div><div class="mock-dot dg"></div></div>
+            <div class="mock-title">ContextOS — Dashboard</div>
+            <div class="mock-badge">● Running</div>
+          </div>
+          <div class="mock-body">
+            <div class="mock-sb">
+              <div class="msb-icon active">⌂</div>
+              <div class="msb-icon">⚡</div>
+              <div class="msb-icon">◈</div>
+              <div class="msb-icon">◎</div>
+              <div style="flex:1"></div>
+              <div class="msb-icon">⚙</div>
+            </div>
+            <div class="mock-content">
+              <div class="mlbl">Today's overview</div>
+              <div class="mstat-g">
+                <div class="mstat" style="background:#f5f3ff;"><div class="msv" style="color:#7c3aed">14</div><div class="msl">Insights fired</div></div>
+                <div class="mstat" style="background:#fef3c7;"><div class="msv" style="color:#d97706">3</div><div class="msl">Conflicts caught</div></div>
+                <div class="mstat" style="background:#e6f7f0;"><div class="msv" style="color:#0d9e62">7</div><div class="msl">Tasks auto-done</div></div>
+                <div class="mstat" style="background:#eff6ff;"><div class="msv" style="color:#1d4ed8">4.2h</div><div class="msl">Focus time</div></div>
+              </div>
+              <div class="mlbl">Current focus</div>
+              <div class="mfocus">
+                <div class="mft">Mobile App Redesign — Sprint 3</div>
+                <div class="mchips">
+                  <span class="mchip">VS Code</span><span class="mchip">Figma</span>
+                  <span class="mchip">Gmail</span><span class="mchip">Slack</span>
+                </div>
+              </div>
+              <div class="mlbl">Context trail</div>
+              <div class="mtrail">
+                <div class="mtr"><div class="mtr-dot"></div><span class="mtr-t">2 min</span><span class="mtr-app">VS Code</span><span class="mtr-x">&nbsp;— AuthService.py opened</span></div>
+                <div class="mtr"><div class="mtr-dot"></div><span class="mtr-t">18 min</span><span class="mtr-app">Gmail</span><span class="mtr-x">&nbsp;— Sara: auth requirements</span></div>
+                <div class="mtr"><div class="mtr-dot"></div><span class="mtr-t">34 min</span><span class="mtr-app">Figma</span><span class="mtr-x">&nbsp;— Login_v4 reviewed</span></div>
+                <div class="mtr"><div class="mtr-dot"></div><span class="mtr-t">47 min</span><span class="mtr-app">Slack</span><span class="mtr-x">&nbsp;— checkout bug fixed</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROBLEM ═══ -->
+<section id="problem">
+  <div class="inner">
+    <div class="tag" data-anim>The problem</div>
+    <h2 data-anim data-delay="1">You lose hours every day<br><span class="accent">switching between apps</span></h2>
+    <p class="sec-sub" data-anim data-delay="2">Every app switch breaks your focus. You miss critical information sitting in another window. Nobody connects the dots — until now.</p>
+
+    <div class="vs-grid" data-anim data-delay="2">
+      <div class="vs-col bad">
+        <span class="vs-lbl">Without ContextOS</span>
+        <div class="vs-item"><div class="vi">✕</div><div>You edit <strong>AuthService.py</strong> — not knowing Sara emailed 10 min ago: "do not change the auth flow"</div></div>
+        <div class="vs-item"><div class="vi">✕</div><div>You debug a bug for 45 min that Ahmed already fixed in <strong>Slack 2 hours ago</strong></div></div>
+        <div class="vs-item"><div class="vi">✕</div><div>You walk into a sprint review without context — forgetting what changed</div></div>
+        <div class="vs-item"><div class="vi">✕</div><div>Every break costs <strong>10+ minutes</strong> just remembering where you were</div></div>
+      </div>
+      <div class="vs-mid">vs</div>
+      <div class="vs-col good">
+        <span class="vs-lbl">With ContextOS</span>
+        <div class="vs-item"><div class="vi">✓</div><div>Instant alert: <strong>"Conflict — Sara's email says auth must not change. You're editing AuthService.py."</strong></div></div>
+        <div class="vs-item"><div class="vi">✓</div><div>Instant alert: <strong>"Ahmed posted the fix for this exact bug in Slack 2 hours ago."</strong></div></div>
+        <div class="vs-item"><div class="vi">✓</div><div>5 min before meeting: a <strong>full briefing</strong> of every relevant file, task, and message</div></div>
+        <div class="vs-item"><div class="vi">✓</div><div>Return screen <strong>rebuilds your context</strong> — one click restores all files instantly</div></div>
+      </div>
+    </div>
+
+    <div class="stats-3">
+      <div class="stat-card" data-anim data-delay="1"><div class="stat-n">2.5h</div><div class="stat-l">lost daily to context switching</div></div>
+      <div class="stat-card" data-anim data-delay="2"><div class="stat-n">15×</div><div class="stat-l">interruptions before returning to deep focus</div></div>
+      <div class="stat-card" data-anim data-delay="3"><div class="stat-n">0</div><div class="stat-l">other Windows apps that solve this</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section id="features">
+  <div class="inner">
+    <div class="tag" data-anim>Core features</div>
+    <h2 data-anim data-delay="1">Four things no other<br><span class="accent">Windows app does</span></h2>
+    <p class="sec-sub" data-anim data-delay="2">All four run silently. You never click anything. ContextOS speaks up only when it matters.</p>
+
+    <div class="feat-grid">
+      <div class="feat-card f1" data-anim data-delay="1">
+        <div class="feat-num">Feature 01</div>
+        <div class="feat-icon">⚠️</div>
+        <div class="feat-title">Conflict detection</div>
+        <div class="feat-desc">When something in one app conflicts with what you're doing in another, ContextOS catches it before you make a costly mistake.</div>
+        <div class="feat-eg">"Don't touch the auth flow" — Sara's email · You just opened AuthService.py · Alerted instantly.</div>
+      </div>
+      <div class="feat-card f2" data-anim data-delay="2">
+        <div class="feat-num">Feature 02</div>
+        <div class="feat-icon">💡</div>
+        <div class="feat-title">Answer surfacing</div>
+        <div class="feat-desc">When the answer to your current problem already exists in your apps, ContextOS finds it and brings it to you without being asked.</div>
+        <div class="feat-eg">You're debugging a null pointer. Ahmed fixed it in Slack 2 hours ago. ContextOS shows you the message.</div>
+      </div>
+      <div class="feat-card f3" data-anim data-delay="3">
+        <div class="feat-num">Feature 03</div>
+        <div class="feat-icon">✅</div>
+        <div class="feat-title">Auto task updates</div>
+        <div class="feat-desc">ContextOS watches how long you work on something and marks the matching Notion or Jira task as in-progress automatically.</div>
+        <div class="feat-eg">Editing login files for 12 minutes. Notion task "Implement login screen" auto-marked in-progress.</div>
+      </div>
+      <div class="feat-card f4" data-anim data-delay="4">
+        <div class="feat-num">Feature 04</div>
+        <div class="feat-icon">📅</div>
+        <div class="feat-title">Meeting briefing</div>
+        <div class="feat-desc">Five minutes before every calendar meeting, ContextOS scans all your apps and gives you a full briefing of what is relevant.</div>
+        <div class="feat-eg">Sprint review in 5 min. ContextOS surfaces open tasks, Sara's email, Ahmed's fix, and Login_v4 in Figma.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SPECS ═══ -->
+<section id="specs">
+  <div class="inner">
+    <div class="tag" data-anim>System requirements</div>
+    <h2 data-anim data-delay="1">Runs on almost<br><span class="accent">any Windows PC</span></h2>
+    <p class="sec-sub" data-anim data-delay="2">Even a 10-year-old laptop with 2GB RAM and Windows 7 gets full value from ContextOS. It auto-detects your hardware on first launch.</p>
+
+    <div class="specs-g">
+      <div class="spec-card" data-anim data-delay="1">
+        <span class="sbadge smin">Minimum</span>
+        <div class="sname">Basic mode</div>
+        <div class="srow"><span class="sri">🖥</span><span class="srl">CPU</span><span class="srv">Intel Core i3 (4th gen+)</span></div>
+        <div class="srow"><span class="sri">💾</span><span class="srl">RAM</span><span class="srv">2 GB</span></div>
+        <div class="srow"><span class="sri">💿</span><span class="srl">Storage</span><span class="srv">300 MB free</span></div>
+        <div class="srow"><span class="sri">🪟</span><span class="srl">OS</span><span class="srv">Windows 7 SP1+</span></div>
+      </div>
+      <div class="spec-card rec" data-anim data-delay="2">
+        <span class="sbadge srec">Recommended ✦</span>
+        <div class="sname">Full mode</div>
+        <div class="srow"><span class="sri">🖥</span><span class="srl">CPU</span><span class="srv">i5 6th gen+ / Ryzen 3</span></div>
+        <div class="srow"><span class="sri">💾</span><span class="srl">RAM</span><span class="srv">4 GB</span></div>
+        <div class="srow"><span class="sri">💿</span><span class="srl">Storage</span><span class="srv">1 GB free</span></div>
+        <div class="srow"><span class="sri">🪟</span><span class="srl">OS</span><span class="srv">Windows 10 / 11</span></div>
+      </div>
+      <div class="spec-card" data-anim data-delay="3">
+        <span class="sbadge sfull">Full AI mode</span>
+        <div class="sname">Power mode</div>
+        <div class="srow"><span class="sri">🖥</span><span class="srl">CPU</span><span class="srv">i7 / Ryzen 5+</span></div>
+        <div class="srow"><span class="sri">💾</span><span class="srl">RAM</span><span class="srv">8 GB+</span></div>
+        <div class="srow"><span class="sri">💿</span><span class="srl">Storage</span><span class="srv">2 GB (local AI)</span></div>
+        <div class="srow"><span class="sri">🎮</span><span class="srl">GPU</span><span class="srv">Optional — speeds up AI</span></div>
+      </div>
+    </div>
+
+    <div class="mlbl" style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);font-weight:700;margin-bottom:12px;" data-anim>CPU usage while running</div>
+    <div class="cpu-rows" id="cpuSection" data-anim data-delay="1">
+      <div class="cpu-row"><span class="cpu-lbl">Idle — just watching</span><div class="cpu-bg"><div class="cpu-fill" data-w="4" style="background:#0d9e62;"></div></div><span class="cpu-val">&lt;2%</span></div>
+      <div class="cpu-row"><span class="cpu-lbl">Active analysis</span><div class="cpu-bg"><div class="cpu-fill" data-w="15" style="background:#1d4ed8;"></div></div><span class="cpu-val">8–15%</span></div>
+      <div class="cpu-row"><span class="cpu-lbl">AI insight burst</span><div class="cpu-bg"><div class="cpu-fill" data-w="30" style="background:#d97706;"></div></div><span class="cpu-val">25–30%</span></div>
+      <div class="cpu-row"><span class="cpu-lbl">RAM usage (always)</span><div class="cpu-bg"><div class="cpu-fill" data-w="20" style="background:#7c3aed;"></div></div><span class="cpu-val">80–150 MB</span></div>
+    </div>
+
+    <div class="bnote" data-anim data-delay="2">
+      <span class="bn-i">🛡️</span>
+      <span>ContextOS auto-detects your hardware on first launch and switches to the right mode automatically. Everything runs 100% offline — no data ever leaves your PC.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STEPS ═══ -->
+<section id="steps">
+  <div class="inner">
+    <div class="tag" data-anim>Quick start</div>
+    <h2 data-anim data-delay="1">Up and running<br><span class="accent">in 3 steps</span></h2>
+    <p class="sec-sub" data-anim data-delay="2">No account. No signup. No internet needed. Just Python and one command.</p>
+
+    <div class="steps-g">
+      <div class="step-card" data-anim data-delay="1">
+        <div class="step-n">1</div>
+        <div class="step-t">Install Python 3.12</div>
+        <div class="step-s">Download free from python.org/downloads — takes 2 minutes. Tick "Add to PATH" during install.</div>
+        <div class="step-code">python.org/downloads</div>
+      </div>
+      <div class="step-card" data-anim data-delay="2">
+        <div class="step-n">2</div>
+        <div class="step-t">Download &amp; install deps</div>
+        <div class="step-s">Download from GitHub, extract the ZIP, open terminal in the folder and run:</div>
+        <div class="step-code">python install_deps.py</div>
+      </div>
+      <div class="step-card" data-anim data-delay="3">
+        <div class="step-n">3</div>
+        <div class="step-t">Run ContextOS</div>
+        <div class="step-s">One command. Tray icon appears in taskbar bottom-right. Right-click → Open Dashboard.</div>
+        <div class="step-code">python main.py</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;" data-anim data-delay="3">
+      <a href="https://github.com/malakb201/contextOS" class="btn-primary" target="_blank" style="display:inline-flex;">
+        ⬇ Download from GitHub — Free
+      </a>
+      <p style="margin-top:12px;font-size:13px;color:var(--text3);">No account needed · No data collected · MIT License</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section id="cta">
+  <div class="inner" style="text-align:center;">
+    <div class="cta-badges" data-anim>
+      <span class="cbadge">🔒 100% offline</span>
+      <span class="cbadge">🐍 Open source</span>
+      <span class="cbadge">🪟 Windows 7–11</span>
+      <span class="cbadge">💰 Free forever</span>
+      <span class="cbadge">✅ 31 tests passing</span>
+    </div>
+    <h2 data-anim data-delay="1">Download ContextOS<br>and take back <span class="accent">your focus</span></h2>
+    <p class="sec-sub" data-anim data-delay="2">Stop losing hours to context switching. Let ContextOS watch your apps and tell you what matters — before it costs you.</p>
+    <div class="cta-btns" data-anim data-delay="3">
+      <a href="https://github.com/malakb201/contextOS" class="btn-primary" target="_blank">⬇ Download Free</a>
+      <a href="https://github.com/malakb201/contextOS" class="btn-secondary" target="_blank" style="color:#94a3b8;border-color:#334155;">★ Star on GitHub</a>
+    </div>
+    <div class="made" data-anim data-delay="4">Made in <span>Pakistan</span> · Developed by <span>SAIPK@support</span></div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="foot-logo">
+    <img src="assets/icons/logo_32.png" alt="ContextOS" onerror="this.style.display='none'">
+    <span>ContextOS</span>
+  </div>
+  <div class="foot-links">
+    <a href="https://github.com/malakb201/contextOS" target="_blank">GitHub</a>
+    <a href="https://github.com/malakb201/contextOS/issues" target="_blank">Issues</a>
+    <a href="https://github.com/malakb201/contextOS/blob/main/README.md" target="_blank">Docs</a>
+  </div>
+  <div class="foot-copy">© 2025 SAIPK@support · MIT License</div>
+</footer>
+
+<script>
+// Progress bar
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  prog.style.width = Math.min(100, pct) + '%';
+}, {passive:true});
+
+// Scroll animations
+const els = document.querySelectorAll('[data-anim]');
+const io  = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const delay = parseInt(e.target.dataset.delay || 0) * 100;
+    setTimeout(() => e.target.classList.add('visible'), delay);
+    io.unobserve(e.target);
+  });
+}, {threshold: 0.1});
+els.forEach(el => io.observe(el));
+
+// Hero fires on load
+setTimeout(() => {
+  document.querySelectorAll('#hero [data-anim]').forEach(el => {
+    const delay = parseInt(el.dataset.delay || 0) * 120 + 200;
+    setTimeout(() => el.classList.add('visible'), delay);
+  });
+}, 100);
+
+// CPU bars animate when visible
+let cpuDone = false;
+const cpuObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !cpuDone) {
+      cpuDone = true;
+      document.querySelectorAll('.cpu-fill').forEach(bar => {
+        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 400);
+      });
+    }
+  });
+}, {threshold: 0.3});
+const cpuSec = document.getElementById('cpuSection');
+if (cpuSec) cpuObs.observe(cpuSec);
+
+// Floating popup — shows on features section
+const popup = document.getElementById('popup');
+let popDone = false;
+const popObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !popDone) {
+      popDone = true;
+      setTimeout(() => {
+        popup.classList.add('show');
+        setTimeout(() => popup.classList.remove('show'), 8000);
+      }, 1200);
+    }
+  });
+}, {threshold: 0.4});
+const featSec = document.getElementById('features');
+if (featSec) popObs.observe(featSec);
+</script>
+</body>
+</html>
