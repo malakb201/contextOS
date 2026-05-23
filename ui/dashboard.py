@@ -522,7 +522,7 @@ class Dashboard:
 
     def _tab_settings(self, parent):
         frame = self._scrollable(parent)
-        pad   = {"padx": 24, "pady": 0}
+        pad   = {"padx": 24}
 
         self._section_label(frame, "General", pady_top=18)
         self._toggle(frame, "Run on Windows startup",
@@ -565,7 +565,7 @@ class Dashboard:
 
     def _toggle(self, parent, label, sub, key, pad):
         row = tk.Frame(parent, bg=C["bg"])
-        row.pack(fill="x", pady=1, **pad)
+        row.pack(fill="x", padx=pad.get("padx", 24), pady=1)
 
         info = tk.Frame(row, bg=C["bg"])
         info.pack(side="left", fill="x", expand=True, pady=10)
@@ -588,7 +588,7 @@ class Dashboard:
 
     def _dropdown(self, parent, label, sub, key, options, pad):
         row = tk.Frame(parent, bg=C["bg"])
-        row.pack(fill="x", pady=1, **pad)
+        row.pack(fill="x", padx=pad.get("padx", 24), pady=1)
 
         info = tk.Frame(row, bg=C["bg"])
         info.pack(side="left", fill="x", expand=True, pady=10)

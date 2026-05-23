@@ -1,5 +1,5 @@
 {
-  "mode": "auto",
+  "mode": "full",
   "idle_delay_seconds": 3,
   "watch_interval": 1.0,
   "analysis_interval": 30,

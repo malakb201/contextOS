@@ -1,1 +1,1 @@
-# ContextOS
+# ContextOS package

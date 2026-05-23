@@ -31,3 +31,73 @@
 00:57:26  INFO      core.app_watcher      AppWatcher started.
 00:57:26  INFO      core.context_engine   ContextEngine started.
 00:57:26  INFO      core.session_manager  Session 3 started.
+13:25:38  INFO      root                  ==================================================
+13:25:38  INFO      root                  ContextOS starting up...
+13:25:38  INFO      root                  ==================================================
+13:25:38  INFO      root                  System specs: RAM=5.7GB, CPU cores=8, OS=Windows-11-10.0.26200-SP0
+13:25:38  INFO      root                  Mode from config: auto
+13:25:38  INFO      data.database         Database ready at C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\context.db
+13:25:38  INFO      root                  Database ready.
+13:25:38  INFO      root                  Launching system tray UI...
+13:25:38  INFO      core.app_watcher      AppWatcher started.
+13:25:38  INFO      core.context_engine   ContextEngine started.
+13:25:38  INFO      core.session_manager  Session 4 started.
+13:54:03  INFO      root                  ====================================================
+13:54:03  INFO      root                    ContextOS starting up
+13:54:03  INFO      root                  ====================================================
+13:54:03  INFO      data.config_manager   Settings loaded from C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\settings.json
+13:54:03  INFO      root                  System: RAM=5.7GB  CPU=8 cores  OS=Windows-11-10.0.26200-SP0
+13:54:03  INFO      utils.system_check    RAM=5.7GB → recommending full mode
+13:54:03  INFO      root                  Auto-selected mode: full
+13:54:03  INFO      data.database         Database ready at C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\context.db
+13:54:03  INFO      root                  Database ready.
+13:54:03  INFO      root                  Launching ContextOS...
+13:54:03  INFO      core.app_watcher      AppWatcher started — mode: REAL (win32gui)
+13:54:03  INFO      core.context_engine   ContextEngine started.
+13:54:03  INFO      core.session_manager  SessionManager started. Session ID: 5
+13:54:03  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"windows" — seen in PowerShell and Windowsterminal')
+13:54:04  INFO      core.startup_manager  Added to startup: "C:\Users\malak\AppData\Local\Programs\Python\Python312\python.exe" "C:\Users\malak\OneDrive\Desktop\clone\contextOS\main.py"
+14:03:00  INFO      root                  ====================================================
+14:03:00  INFO      root                    ContextOS starting up
+14:03:00  INFO      root                  ====================================================
+14:03:00  INFO      data.config_manager   Settings loaded from C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\settings.json
+14:03:00  INFO      root                  System: RAM=5.7GB  CPU=8 cores  OS=Windows-11-10.0.26200-SP0
+14:03:00  INFO      root                  Mode: full
+14:03:00  INFO      data.database         Database ready at C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\context.db
+14:03:00  INFO      root                  Database ready.
+14:03:00  INFO      root                  Launching ContextOS...
+14:03:00  INFO      core.app_watcher      AppWatcher started — mode: REAL (win32gui)
+14:03:00  INFO      core.context_engine   ContextEngine started.
+14:03:00  INFO      core.session_manager  SessionManager started. Session ID: 6
+14:03:00  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"windows" — seen in Windows Terminal and PowerShell')
+14:03:00  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"system32" — seen in Windows Terminal and Windowsterminal')
+14:03:31  INFO      core.context_engine   Dispatching insight: Insight('auto_update': 'Terminal activity on "windows" while editing it in your editor')
+14:03:45  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"windows" — seen in PowerShell and Windows Terminal')
+14:03:45  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"windows" — seen in PowerShell and Windowsterminal')
+14:03:50  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"contextos" — seen in Notepad and Python')
+14:03:54  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"contextos" — seen in Python and Notepad')
+14:04:03  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"dashboard" — seen in VS Code and Python')
+14:04:03  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"contextos" — seen in VS Code and Notepad')
+14:04:15  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"dashboard" — seen in Python and VS Code')
+14:04:40  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"contextos" — seen in Notepad and VS Code')
+14:08:00  INFO      core.session_manager  User went away — session snapshot taken.
+14:08:34  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"zeeshan" — seen in File Explorer and Chrome')
+14:08:41  INFO      core.context_engine   Dispatching insight: Insight('auto_update': 'Terminal activity on "windows" while editing it in your editor')
+14:08:44  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"windows" — seen in Windows Terminal and PowerShell')
+14:09:58  INFO      root                  ====================================================
+14:09:58  INFO      root                    ContextOS starting up
+14:09:58  INFO      root                  ====================================================
+14:09:58  INFO      data.config_manager   Settings loaded from C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\settings.json
+14:09:59  INFO      root                  System: RAM=5.7GB  CPU=8 cores  OS=Windows-11-10.0.26200-SP0
+14:09:59  INFO      root                  Mode: full
+14:09:59  INFO      data.database         Database ready at C:\Users\malak\OneDrive\Desktop\clone\contextOS\data\user_data\context.db
+14:09:59  INFO      root                  Database ready.
+14:09:59  INFO      root                  Launching ContextOS...
+14:09:59  INFO      core.app_watcher      AppWatcher started — mode: REAL (win32gui)
+14:09:59  INFO      core.context_engine   ContextEngine started.
+14:09:59  INFO      core.session_manager  SessionManager started. Session ID: 7
+14:14:59  INFO      core.session_manager  User went away — session snapshot taken.
+14:21:43  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"payment" — detected in Notepad and Chrome')
+14:22:27  INFO      core.context_engine   Dispatching insight: Insight('conflict': '"payment" — detected in VS Code and Notepad')
+14:22:54  INFO      core.context_engine   Dispatching insight: Insight('answer': 'Your browser research on "payment" matches your current code')
+14:22:54  INFO      core.context_engine   Dispatching insight: Insight('conflict': 'GitHub and local editor both show "payment"')
